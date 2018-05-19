@@ -1,0 +1,99 @@
+body {
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0;
+  padding: 0;
+  width: 100%
+}
+
+.top-container {
+  background-color: #E5F3F2;
+  padding: 25px 0 25px 0;
+  width: 100%;
+}
+
+.input-container {
+  margin: auto;
+  width: 50%;
+}
+
+.title {
+  text-align: center;
+}
+
+.title-idea {
+font-size: 32px;
+}
+
+.title-box {
+
+}
+
+.input {
+  border: 2px solid #939598;
+  font-size: 1.5em;
+  height: 30px;
+  margin-bottom: 20px;
+  width: 99.5%;
+}
+
+.input::placeholder {
+  color: #939598;
+
+}
+
+.title-input {
+
+}
+
+.body-input {
+
+}
+
+.submit {
+
+}
+
+.submit-button {
+  background: #00A79D;
+  color: #FFFFFF;
+  font-size: 1.7em;
+  height: 35px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #045E55;
+  cursor: pointer;
+}
+
+.bottom-container {
+  height: 100vh;
+  width: 100%;
+}
+
+.search-container {
+  margin: auto;
+  width: 50%;
+}
+
+.search-input {
+
+}
+
+.cards-container {
+  background-color: #FFFFFF;
+}
+
+li {
+  list-style-type: none;
+}
+
+.idea-card {
+
+}
+
+
+
+
