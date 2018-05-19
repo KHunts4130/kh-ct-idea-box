@@ -86,6 +86,10 @@ font-size: 32px;
   background-color: #FFFFFF;
 }
 
+.idea-head {
+  display: flex;
+}
+
 li {
   list-style-type: none;
 }
@@ -94,6 +98,8 @@ li {
 
 }
 
-
+.buttons {
+  width: 5vw;
+}
 
 
