@@ -25,8 +25,8 @@ function createIdeaCard(event){
   <footer class="idea-foot">
     <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
     <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-    <p class="quality">quality: ${"Swill"}</p> 
-  </footer> `);
+    <p class="quality"><span class="quality-title">quality: </span>${"Swill"}</p>
+  </footer>`)    
   $ideaCard.prepend($createCard);
   addToLocalStorage();
   clearInputs();
@@ -54,7 +54,7 @@ function IdeaCard(id, title, body, quality) {
 
 function newIdeaCard(event) {
   event.preventDefault();
-  id =$.now();
+  id = $.now();
   title = $titleInput.val();
   body = $bodyInput.val();
   quality = 'Swill';
