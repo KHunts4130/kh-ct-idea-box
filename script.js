@@ -22,18 +22,34 @@ function createIdeaCard(event){
     <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
   </header>
   <p class="idea-body"contenteditable>${$bodyInput.val()}</p>
-  <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
-  <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-  <p class="quality">quality: ${"Swill"}</p>`)    
+  <footer class="idea-foot">
+    <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
+    <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
+    <p class="quality">quality: ${"Swill"}</p> 
+  </footer> `);
   $ideaCard.prepend($createCard);
+  addToLocalStorage();
   clearInputs();
 };
 
-function IdeaCard(object) {
-  this.id = object.id;
-  this.title = object.title;
-  this.body = object.body;
-  this.quality = object.quality || 'Swill';
+function addToLocalStorage(object) {
+  console.log('addToLocalStorage function');
+  var cardToStore = {id: id, title: title, body: body, quality: quality};
+  var stringifiedCard = JSON.stringify(cardToStore);
+  localStorage.setItem(id, stringifiedCard);
+}
+
+function retrieveFromLocalStorage() {
+  // do we need to pass in the id?
+  var retrievedCard = LocalStorage.getItem(id);
+  var parsedCard = JSON.parse(retrievedCard);
+}
+
+function IdeaCard(id, title, body, quality) {
+  this.id = id;
+  this.title = title;
+  this.body = body;
+  this.quality = quality;
 };
 
 function newIdeaCard(event) {
@@ -42,7 +58,7 @@ function newIdeaCard(event) {
   title = $titleInput.val();
   body = $bodyInput.val();
   quality = 'Swill';
-  var makeCard = new IdeaCard({id: id, title: title, body: body, quality: quality});
+  var makeCard = new IdeaCard({id: id, title: title, body: $bodyInput.val(), quality: 'swill'});
   
   createIdeaCard(makeCard);
   // add to local strorage here 
