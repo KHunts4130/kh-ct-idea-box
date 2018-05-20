@@ -23,10 +23,11 @@ body {
 
 .title-idea {
 font-size: 32px;
+color: #00A79D;
 }
 
 .title-box {
-
+  color: #6D6E71;
 }
 
 .input {
@@ -89,8 +90,37 @@ font-size: 32px;
   background-color: #FFFFFF;
 }
 
+.new-idea {
+  border-bottom: 1px solid #D1D3D4;
+  margin-top: 2rem;
+}
+
 .idea-head {
+  color: #6D6E71;
+  align-items: center;
   display: flex;
+  flex-direction: row;
+  font-size: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: .8rem;
+}
+
+.idea-title {
+  margin: 0;
+}
+
+.idea-body {
+  color: #939598;
+  font-size: 1.3rem;
+  margin: .5rem 0;
+}
+
+.idea-foot {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin-bottom: .5rem;
 }
 
 li {
@@ -99,18 +129,36 @@ li {
 
 .idea-card {
   margin: 0 auto;
+  padding: 0;
 }
 
 .buttons {
   width: 2vw;
 }
 
-.up-vote {
+.delete-button:hover {
+  content:url(images/delete-hover.svg);
+}
+
+.up-vote:hover {
+  content:url(images/upvote-hover.svg);
 
 }
 
+.down-vote {
+  padding-left: 1rem;
+}
 
+.down-vote:hover {
+  content:url(images/downvote-hover.svg);
+}
 
+.quality {
+  color: #6D6E71;
+  padding-left: 1rem;
+}
 
-
+.quality-title {
+  font-weight: 700;
+}
 
