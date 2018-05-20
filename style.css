@@ -79,10 +79,13 @@ font-size: 32px;
 }
 
 .search-input {
-
+  margin:20px 0 0 0;
 }
 
 .cards-container {
+  height: 100%;
+  width: 50%;
+  margin:0 auto;
   background-color: #FFFFFF;
 }
 
@@ -95,11 +98,19 @@ li {
 }
 
 .idea-card {
-
+  margin: 0 auto;
 }
 
 .buttons {
-  width: 5vw;
+  width: 2vw;
 }
+
+.up-vote {
+
+}
+
+
+
+
 
 
