@@ -15,6 +15,7 @@ $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
 function createIdeaCard(event){
+  var $quality = $quality || 'Swill';
   var $createCard = $('<li class="new-idea"></li>');
   $createCard.html(`
   <header class="idea-head">
@@ -25,7 +26,7 @@ function createIdeaCard(event){
   <footer class="idea-foot">
     <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
     <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-    <p class="quality"><span class="quality-title">quality: </span>${"Swill"}</p>
+    <p class="quality"><span class="quality-title">quality: </span>${$quality}</p>
   </footer>`)    
   $ideaCard.prepend($createCard);
   addToLocalStorage();
@@ -81,8 +82,11 @@ function deleteCard(event){
 
 
 function upVote(event) {
-  console.log('up vote function');
-
+  // var $quality = (this).$quality;
+  // console.log('up vote function');
+  // if ($(this).nextSibling.contains($quality ==='Swill')) {
+  //   console.log("working mother fucker");
+  }
 };
 
 function downVote(event) {
