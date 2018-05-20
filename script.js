@@ -22,9 +22,11 @@ function createIdeaCard(event){
     <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
   </header>
   <p class="idea-body"contenteditable>${$bodyInput.val()}</p>
-  <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
-  <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-  <p class="quality">quality: ${"Swill"}</p>`)    
+  <footer class="idea-foot">
+    <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
+    <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
+    <p class="quality"><span class="quality-title">quality: </span>${"Swill"}</p>
+  </footer>`)    
   $ideaCard.prepend($createCard);
   clearInputs();
 };
@@ -38,7 +40,7 @@ function IdeaCard(object) {
 
 function newIdeaCard(event) {
   event.preventDefault();
-  id =$.now();
+  id = $.now();
   title = $titleInput.val();
   body = $bodyInput.val();
   quality = 'Swill';
