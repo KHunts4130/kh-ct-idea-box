@@ -14,21 +14,21 @@ $ideaCard.on('click', 'li .up-vote', upVote);
 $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
-function createIdeaCard(event){
-  var $quality = $quality || 'Swill';
-  var $createCard = $('<li class="new-idea"></li>');
-  $createCard.html(`
-  <header class="idea-head">
-    <h1 class="idea-title"contenteditable>${$titleInput.val()}</h1>
-    <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
-  </header>
-  <p class="idea-body"contenteditable>${$bodyInput.val()}</p>
-  <footer class="idea-foot">
-    <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
-    <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-    <p class="quality-full"><span class="quality-title">quality: </span><span class="quality-judgment">${$quality}</span></p>
-  </footer>`)    
-  $ideaCard.prepend($createCard);
+function createIdeaCard(object){
+  $ideaCard.prepend(`
+    <li id=${object.id}class="new-idea">
+      <header class="idea-head">
+        <h1 class="idea-title"contenteditable>${object.title}</h1>
+        <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
+      </header>
+      <p class="idea-body"contenteditable>${object.body}</p>
+      <footer class="idea-foot">
+        <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
+        <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
+        <p class="quality-full"><span class="quality-title">quality: </span><span class="quality-judgment">${object.quality}</span></p>
+      </footer>
+    </li>
+  `)    
   addToLocalStorage();
   clearInputs();
 };
@@ -46,7 +46,7 @@ function retrieveFromLocalStorage() {
   var parsedCard = JSON.parse(retrievedCard);
 }
 
-function IdeaCard(id, title, body, quality) {
+function IdeaCard(object) {
   this.id = id;
   this.title = title;
   this.body = body;
@@ -76,25 +76,30 @@ function clearInputs(){
 
 function deleteCard(event) {
   $(this).parent().parent().remove();
+
 };
 
 
 function upVote(event) {
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
-    console.log($(this).siblings('p').children('span.quality-judgment').text());
+    console.log(quality);
   if (quality === 'Swill') {
     $(this).siblings('p').children('span.quality-judgment').text('Plausible');
   } 
   else if (quality === 'Plausible') {
     $(this).siblings('p').children('span.quality-judgment').text('Genius');
   }
-  else if (quality === 'Genius') {
-    stop();
-  }
 };
 
+
 function downVote(event) {
-  console.log('down vote function');
+  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
+  if (quality === 'Genius') {
+    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
+  } 
+  else if (quality === 'Plausible') {
+    $(this).siblings('p').children('span.quality-judgment').text('Swill');
+  }
 };
 
 function toggleSubmitButton(event) {
