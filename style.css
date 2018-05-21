@@ -142,7 +142,6 @@ li {
 
 .up-vote:hover {
   content:url(images/upvote-hover.svg);
-
 }
 
 .down-vote {
@@ -153,7 +152,7 @@ li {
   content:url(images/downvote-hover.svg);
 }
 
-.quality {
+.quality-judgment {
   color: #6D6E71;
   padding-left: 1rem;
 }

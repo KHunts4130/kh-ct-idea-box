@@ -59,16 +59,14 @@ function newIdeaCard(event) {
   title = $titleInput.val();
   body = $bodyInput.val();
   quality = 'Swill';
-  var makeCard = new IdeaCard({id: id, title: title, body: $bodyInput.val(), quality: 'swill'});
+  var makeCard = new IdeaCard({id: id, title: title, body: body, quality: 'Swill'});
   
   createIdeaCard(makeCard);
   // add to local strorage here 
 }
 
-
-
 function searchIdeas(){
-  console.log("searchIdeas funcation");
+  console.log("searchIdeas function");
 };
 
 function clearInputs(){
@@ -76,14 +74,13 @@ function clearInputs(){
   $bodyInput.val('');
 };
 
-function deleteCard(event){
+function deleteCard(event) {
   $(this).parent().parent().remove();
 
 };
 
 
 function upVote(event) {
-  console.log('upvote functiuon');
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
