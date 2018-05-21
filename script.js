@@ -16,7 +16,7 @@ $searchInput.on('keyup', searchLocalStorage)
 
 function createIdeaCard(object){
   $ideaCard.prepend(`
-    <li id=${object.id}class="new-idea">
+    <li id=${object.id} class="new-idea">
       <header class="idea-head">
         <h1 class="idea-title"contenteditable>${object.title}</h1>
         <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
@@ -75,12 +75,13 @@ function clearInputs(){
 };
 
 function deleteCard(event) {
+  removeCard = (this).closest('li').id
   $(this).parent().parent().remove();
-
+  localStorage.removeItem(removeCard)
 };
 
 
-function upVote(event) {
+function upVote() {
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
@@ -92,7 +93,8 @@ function upVote(event) {
 };
 
 
-function downVote(event) {
+function downVote() {
+  
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
   if (quality === 'Genius') {
     $(this).siblings('p').children('span.quality-judgment').text('Plausible');
