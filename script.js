@@ -15,6 +15,7 @@ $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
 function createIdeaCard(event){
+  var $quality = $quality || 'Swill';
   var $createCard = $('<li class="new-idea"></li>');
   $createCard.html(`
   <header class="idea-head">
@@ -25,7 +26,7 @@ function createIdeaCard(event){
   <footer class="idea-foot">
     <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
     <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-    <p class="quality"><span class="quality-title">quality: </span>${"Swill"}</p>
+    <p class="quality-full"><span class="quality-title">quality: </span><span class="quality-judgment">${$quality}</span></p>
   </footer>`)    
   $ideaCard.prepend($createCard);
   addToLocalStorage();
@@ -58,16 +59,14 @@ function newIdeaCard(event) {
   title = $titleInput.val();
   body = $bodyInput.val();
   quality = 'Swill';
-  var makeCard = new IdeaCard({id: id, title: title, body: $bodyInput.val(), quality: 'swill'});
+  var makeCard = new IdeaCard({id: id, title: title, body: body, quality: 'Swill'});
   
   createIdeaCard(makeCard);
   // add to local strorage here 
 }
 
-
-
 function searchIdeas(){
-  console.log("searchIdeas funcation");
+  console.log("searchIdeas function");
 };
 
 function clearInputs(){
@@ -75,14 +74,23 @@ function clearInputs(){
   $bodyInput.val('');
 };
 
-function deleteCard(event){
+function deleteCard(event) {
   $(this).parent().parent().remove();
 };
 
 
 function upVote(event) {
-  console.log('up vote function');
-
+  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
+    console.log($(this).siblings('p').children('span.quality-judgment').text());
+  if (quality === 'Swill') {
+    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
+  } 
+  else if (quality === 'Plausible') {
+    $(this).siblings('p').children('span.quality-judgment').text('Genius');
+  }
+  else if (quality === 'Genius') {
+    stop();
+  }
 };
 
 function downVote(event) {
