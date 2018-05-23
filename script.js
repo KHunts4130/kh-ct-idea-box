@@ -5,7 +5,7 @@ var $bodyInput = $(".body-input");
 var $submitButton = $(".submit-button");
 var $searchInput = $(".search-input");
 var $ideaCard = $(".idea-card");
-var ideas = ideas || []
+var ideas = []
 
 $titleInput.on('keyup', toggleSubmitButton);
 $bodyInput.on('keyup', toggleSubmitButton);
@@ -22,9 +22,6 @@ if (localStorage.getItem('ideas')) {
 
 //need an each loop to go through and grab each instance. idea is an array
 function createIdeaCard(idea){
-  ideas.forEach(function(idea) {
-    console.log(idea[0])
-  });
   $ideaCard.prepend(`
     <li id=${idea.id} class="new-idea">
       <header class="idea-head">
@@ -56,7 +53,10 @@ function retrieveFromLocalStorage() {
   var retrievedCard = localStorage.getItem('ideas');
   var parsedCard = JSON.parse(retrievedCard);
   console.log(parsedCard);
-  createIdeaCard(parsedCard);
+  parsedCard.forEach(function(idea) {
+    createIdeaCard(idea);
+    console.log(idea)
+  });
 }
 
 function IdeaCard(object) {
@@ -73,7 +73,6 @@ function newIdeaCard(event) {
   body = $bodyInput.val();
   quality = 'Swill';
   var makeCard = new IdeaCard({id: id, title: title, body: body, quality: 'Swill'});
-  
   createIdeaCard(makeCard);
   // add to local strorage here 
 }
@@ -104,11 +103,8 @@ function upVote() {
   }
   var ideaToChange = findIdea($(this).parent().parent().attr('id'));
 
-  
-
   console.log('hi');
-  console.log(uniqueId);  
-
+  console.log(uniqueId);
 };
 
 function findIdea(id) {
