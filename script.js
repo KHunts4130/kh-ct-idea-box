@@ -5,6 +5,7 @@ var $bodyInput = $(".body-input");
 var $submitButton = $(".submit-button");
 var $searchInput = $(".search-input");
 var $ideaCard = $(".idea-card");
+var ideas = ideas || []
 
 $titleInput.on('keyup', toggleSubmitButton);
 $bodyInput.on('keyup', toggleSubmitButton);
@@ -14,36 +15,48 @@ $ideaCard.on('click', 'li .up-vote', upVote);
 $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
-function createIdeaCard(object){
+if (localStorage.getItem('ideas')) {
+  retrieveFromLocalStorage();
+  console.log(ideas.length)
+};
+
+//need an each loop to go through and grab each instance. idea is an array
+function createIdeaCard(idea){
+  ideas.forEach(function(idea) {
+    console.log(idea[0])
+  });
   $ideaCard.prepend(`
-    <li id=${object.id} class="new-idea">
+    <li id=${idea.id} class="new-idea">
       <header class="idea-head">
-        <h1 class="idea-title"contenteditable>${object.title}</h1>
+        <h1 class="idea-title"contenteditable>${idea.title}</h1>
         <img src="images/delete.svg" alt="Delete" class="delete-button buttons">
       </header>
-      <p class="idea-body"contenteditable>${object.body}</p>
+      <p class="idea-body"contenteditable>${idea.body}</p>
       <footer class="idea-foot">
         <img src="images/upvote.svg" alt="Up Vote" class="up-vote buttons">
         <img src="images/downvote.svg" alt="Down Vote" class="down-vote buttons">
-        <p class="quality-full"><span class="quality-title">quality: </span><span class="quality-judgment">${object.quality}</span></p>
+        <p class="quality-full"><span class="quality-title">quality: </span><span class="quality-judgment">${idea.quality}</span></p>
       </footer>
     </li>
-  `)    
+  `)
+  ideas.push(idea);
   addToLocalStorage();
   clearInputs();
 };
 
-function addToLocalStorage(object) {
-  console.log('addToLocalStorage function');
-  var cardToStore = {id: id, title: title, body: body, quality: quality};
-  var stringifiedCard = JSON.stringify(cardToStore);
-  localStorage.setItem(id, stringifiedCard);
+function addToLocalStorage() {
+  console.log('addToLocalStoragefunction');
+  // var cardToStore = {id: id, title: title, body: body, quality: quality};
+  var stringifiedCard = JSON.stringify(ideas);
+  localStorage.setItem('ideas', stringifiedCard);
 }
 
 function retrieveFromLocalStorage() {
   // do we need to pass in the id?
-  var retrievedCard = LocalStorage.getItem(id);
+  var retrievedCard = localStorage.getItem('ideas');
   var parsedCard = JSON.parse(retrievedCard);
+  console.log(parsedCard);
+  createIdeaCard(parsedCard);
 }
 
 function IdeaCard(object) {
@@ -75,11 +88,10 @@ function clearInputs(){
 };
 
 function deleteCard(event) {
-  removeCard = (this).closest('li').id
+  removeCard = (this).closest('li').id;
   $(this).parent().parent().remove();
-  localStorage.removeItem(removeCard)
+  localStorage.removeItem(removeCard);
 };
-
 
 function upVote() {
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
@@ -90,11 +102,25 @@ function upVote() {
   else if (quality === 'Plausible') {
     $(this).siblings('p').children('span.quality-judgment').text('Genius');
   }
+  var ideaToChange = findIdea($(this).parent().parent().attr('id'));
+
+  
+
+  console.log('hi');
+  console.log(uniqueId);  
+
 };
 
+function findIdea(id) {
+  console.log(id)
+  var uniqueId = ideas.filter(function(idea) {
+    return idea.id == id;
+  })
+    return uniqueId[0]
+  console.log(uniqueId);
+}
 
 function downVote() {
-  
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
   if (quality === 'Genius') {
     $(this).siblings('p').children('span.quality-judgment').text('Plausible');
