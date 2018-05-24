@@ -6,6 +6,8 @@ var $submitButton = $(".submit-button");
 var $searchInput = $(".search-input");
 var $ideaCard = $(".idea-card");
 var ideas = []
+var n=0
+
 
 $titleInput.on('keyup', toggleSubmitButton);
 $bodyInput.on('keyup', toggleSubmitButton);
@@ -15,12 +17,12 @@ $ideaCard.on('click', 'li .up-vote', upVote);
 $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
+
 if (localStorage.getItem('ideas')) {
   retrieveFromLocalStorage();
-  console.log(ideas.length)
 };
 
-//need an each loop to go through and grab each instance. idea is an array
+
 function createIdeaCard(idea){
   $ideaCard.prepend(`
     <li id=${idea.id} class="new-idea">
@@ -41,15 +43,14 @@ function createIdeaCard(idea){
   clearInputs();
 };
 
+
 function addToLocalStorage() {
-  console.log('addToLocalStoragefunction');
-  // var cardToStore = {id: id, title: title, body: body, quality: quality};
   var stringifiedCard = JSON.stringify(ideas);
   localStorage.setItem('ideas', stringifiedCard);
 }
 
+
 function retrieveFromLocalStorage() {
-  // do we need to pass in the id?
   var retrievedCard = localStorage.getItem('ideas');
   var parsedCard = JSON.parse(retrievedCard);
   console.log(parsedCard);
@@ -59,12 +60,14 @@ function retrieveFromLocalStorage() {
   });
 }
 
+
 function IdeaCard(object) {
   this.id = id;
   this.title = title;
   this.body = body;
   this.quality = quality;
 };
+
 
 function newIdeaCard(event) {
   event.preventDefault();
@@ -74,25 +77,48 @@ function newIdeaCard(event) {
   quality = 'Swill';
   var makeCard = new IdeaCard({id: id, title: title, body: body, quality: 'Swill'});
   createIdeaCard(makeCard);
-  // add to local strorage here 
 }
+
 
 function searchIdeas(){
   console.log("searchIdeas function");
 };
 
+
 function clearInputs(){
   $titleInput.val('');
   $bodyInput.val('');
+  $submitButton.prop('disabled', true)
 };
 
-function deleteCard(event) {
-  removeCard = (this).closest('li').id;
+
+function deleteCard(event) { 
+  removeCardId = $(this).parent().parent().attr('id')
+  var retrievedCard = localStorage.getItem('ideas');
+  var parsedCard = JSON.parse(retrievedCard);
+  idToRemove = removeCardId
   $(this).parent().parent().remove();
-  localStorage.removeItem(removeCard);
+  var newArray = parsedCard.filter(function (obj) {
+    console.log('this: ' + obj.id);
+    console.log('that: ' + removeCardId);
+    return idToRemove != obj.id
+  });
+  ideas = newArray;
+  stringifiedArray = JSON.stringify(ideas);
+  localStorage.setItem('ideas', stringifiedArray);
+  localStorage.removeItem(ideas);
 };
+
 
 function upVote() {
+  var retrievedCard = localStorage.getItem('ideas');
+  var parsedCard = JSON.parse(retrievedCard);
+  var newArray = parsedCard.filter(function (obj) {
+    return idToRemove != obj.id
+  });
+  localStorage.removeItem(ideas);
+  stringifiedArray = JSON.stringify(newArray);
+  localStorage.setItem('ideas', stringifiedArray);
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
@@ -102,10 +128,29 @@ function upVote() {
     $(this).siblings('p').children('span.quality-judgment').text('Genius');
   }
   var ideaToChange = findIdea($(this).parent().parent().attr('id'));
-
-  console.log('hi');
-  console.log(uniqueId);
 };
+
+
+function downVote() {
+  changeQualityCardId = $(this).parent().parent().attr('id')
+  console.log(changeQuality)
+  var retrievedCard = localStorage.getItem('ideas');
+  var parsedCard = JSON.parse(retrievedCard);
+  var newQuality = parsedCard.map(function (quality) {
+    return quality.text()
+  });
+  localStorage.removeItem(ideas);
+  stringifiedArray = JSON.stringify(newArray);
+  localStorage.setItem('ideas', stringifiedArray);
+  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
+  if (quality === 'Genius') {
+    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
+  } 
+  else if (quality === 'Plausible') {
+    $(this).siblings('p').children('span.quality-judgment').text('Swill');
+  }
+};
+
 
 function findIdea(id) {
   console.log(id)
@@ -116,28 +161,16 @@ function findIdea(id) {
   console.log(uniqueId);
 }
 
-function downVote() {
-  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
-  if (quality === 'Genius') {
-    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
-  } 
-  else if (quality === 'Plausible') {
-    $(this).siblings('p').children('span.quality-judgment').text('Swill');
-  }
-};
 
-function toggleSubmitButton(event) {
-  event.preventDefault();
-  if ($titleInput.val() === '' || $bodyInput.val() === '') {
-    $submitButton.prop('disabled', true)
+function toggleSubmitButton() {
+  // event.preventDefault();
+  if ($titleInput.val() !== '' && $bodyInput.val() !== '') {
+    $submitButton.attr('disabled', false)
   } else {
-    $submitButton.prop('disabled', false)
+    return false;
   }
 };
 
 function searchLocalStorage() {
   console.log('searchLocalStorage function');
 }
-
-
-
