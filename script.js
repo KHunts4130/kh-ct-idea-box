@@ -111,14 +111,14 @@ function deleteCard(event) {
 
 
 function upVote() {
-  var retrievedCard = localStorage.getItem('ideas');
-  var parsedCard = JSON.parse(retrievedCard);
-  var newArray = parsedCard.filter(function (obj) {
-    return idToRemove != obj.id
-  });
-  localStorage.removeItem(ideas);
-  stringifiedArray = JSON.stringify(newArray);
-  localStorage.setItem('ideas', stringifiedArray);
+  // var retrievedCard = localStorage.getItem('ideas');
+  // var parsedCard = JSON.parse(retrievedCard);
+  // var newArray = parsedCard.filter(function (obj) {
+  //   return idToRemove != obj.id
+  // });
+  // localStorage.removeItem(ideas);
+  // stringifiedArray = JSON.stringify(newArray);
+  // localStorage.setItem('ideas', stringifiedArray);
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
@@ -127,21 +127,21 @@ function upVote() {
   else if (quality === 'Plausible') {
     $(this).siblings('p').children('span.quality-judgment').text('Genius');
   }
-  var ideaToChange = findIdea($(this).parent().parent().attr('id'));
+  // var ideaToChange = findIdea($(this).parent().parent().attr('id'));
 };
 
 
 function downVote() {
-  changeQualityCardId = $(this).parent().parent().attr('id')
-  console.log(changeQuality)
-  var retrievedCard = localStorage.getItem('ideas');
-  var parsedCard = JSON.parse(retrievedCard);
-  var newQuality = parsedCard.map(function (quality) {
-    return quality.text()
-  });
-  localStorage.removeItem(ideas);
-  stringifiedArray = JSON.stringify(newArray);
-  localStorage.setItem('ideas', stringifiedArray);
+  // changeQualityCardId = $(this).parent().parent().attr('id')
+  // console.log(changeQuality)
+  // var retrievedCard = localStorage.getItem('ideas');
+  // var parsedCard = JSON.parse(retrievedCard);
+  // var newQuality = parsedCard.map(function (quality) {
+  //   return quality.text()
+  // });
+  // localStorage.removeItem(ideas);
+  // stringifiedArray = JSON.stringify(newArray);
+  // localStorage.setItem('ideas', stringifiedArray);
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
   if (quality === 'Genius') {
     $(this).siblings('p').children('span.quality-judgment').text('Plausible');
