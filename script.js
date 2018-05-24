@@ -8,7 +8,6 @@ var $ideaCard = $(".idea-card");
 var ideas = []
 var n=0
 
-
 $titleInput.on('keyup', toggleSubmitButton);
 $bodyInput.on('keyup', toggleSubmitButton);
 $submitButton.on('click', newIdeaCard);
@@ -21,7 +20,6 @@ $searchInput.on('keyup', searchLocalStorage)
 if (localStorage.getItem('ideas')) {
   retrieveFromLocalStorage();
 };
-
 
 function createIdeaCard(idea){
   $ideaCard.prepend(`
@@ -91,7 +89,6 @@ function clearInputs(){
   $submitButton.prop('disabled', true)
 };
 
-
 function deleteCard(event) { 
   removeCardId = $(this).parent().parent().attr('id')
   var retrievedCard = localStorage.getItem('ideas');
@@ -99,8 +96,6 @@ function deleteCard(event) {
   idToRemove = removeCardId
   $(this).parent().parent().remove();
   var newArray = parsedCard.filter(function (obj) {
-    console.log('this: ' + obj.id);
-    console.log('that: ' + removeCardId);
     return idToRemove != obj.id
   });
   ideas = newArray;
@@ -119,6 +114,7 @@ function upVote() {
   // localStorage.removeItem(ideas);
   // stringifiedArray = JSON.stringify(newArray);
   // localStorage.setItem('ideas', stringifiedArray);
+
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
