@@ -16,6 +16,7 @@ $ideaCard.on('click', 'li .up-vote', upVote);
 $ideaCard.on('click', 'li .down-vote', downVote);
 $searchInput.on('keyup', searchLocalStorage)
 
+
 if (localStorage.getItem('ideas')) {
   retrieveFromLocalStorage();
 };
@@ -40,10 +41,12 @@ function createIdeaCard(idea){
   clearInputs();
 };
 
+
 function addToLocalStorage() {
   var stringifiedCard = JSON.stringify(ideas);
   localStorage.setItem('ideas', stringifiedCard);
 }
+
 
 function retrieveFromLocalStorage() {
   var retrievedCard = localStorage.getItem('ideas');
@@ -55,12 +58,14 @@ function retrieveFromLocalStorage() {
   });
 }
 
+
 function IdeaCard(object) {
   this.id = id;
   this.title = title;
   this.body = body;
   this.quality = quality;
 };
+
 
 function newIdeaCard(event) {
   event.preventDefault();
@@ -72,13 +77,16 @@ function newIdeaCard(event) {
   createIdeaCard(makeCard);
 }
 
+
 function searchIdeas(){
   console.log("searchIdeas function");
 };
 
+
 function clearInputs(){
   $titleInput.val('');
   $bodyInput.val('');
+  $submitButton.prop('disabled', true)
 };
 
 function deleteCard(event) { 
@@ -90,23 +98,22 @@ function deleteCard(event) {
   var newArray = parsedCard.filter(function (obj) {
     return idToRemove != obj.id
   });
-  stringifiedArray = JSON.stringify(newArray);
+  ideas = newArray;
+  stringifiedArray = JSON.stringify(ideas);
   localStorage.setItem('ideas', stringifiedArray);
   localStorage.removeItem(ideas);
 };
 
 
 function upVote() {
-  var retrievedCard = localStorage.getItem('ideas');
-  var parsedCard = JSON.parse(retrievedCard);
-  
-  var newArray = parsedCard.filter(function (obj) {
-    return idToRemove != obj.id
-  });
-  localStorage.removeItem(ideas);
-  stringifiedArray = JSON.stringify(newArray);
-  localStorage.setItem('ideas', stringifiedArray);
-
+  // var retrievedCard = localStorage.getItem('ideas');
+  // var parsedCard = JSON.parse(retrievedCard);
+  // var newArray = parsedCard.filter(function (obj) {
+  //   return idToRemove != obj.id
+  // });
+  // localStorage.removeItem(ideas);
+  // stringifiedArray = JSON.stringify(newArray);
+  // localStorage.setItem('ideas', stringifiedArray);
 
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
@@ -116,11 +123,30 @@ function upVote() {
   else if (quality === 'Plausible') {
     $(this).siblings('p').children('span.quality-judgment').text('Genius');
   }
-  var ideaToChange = findIdea($(this).parent().parent().attr('id'));
-
-  console.log('hi');
-  console.log(uniqueId);
+  // var ideaToChange = findIdea($(this).parent().parent().attr('id'));
 };
+
+
+function downVote() {
+  // changeQualityCardId = $(this).parent().parent().attr('id')
+  // console.log(changeQuality)
+  // var retrievedCard = localStorage.getItem('ideas');
+  // var parsedCard = JSON.parse(retrievedCard);
+  // var newQuality = parsedCard.map(function (quality) {
+  //   return quality.text()
+  // });
+  // localStorage.removeItem(ideas);
+  // stringifiedArray = JSON.stringify(newArray);
+  // localStorage.setItem('ideas', stringifiedArray);
+  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
+  if (quality === 'Genius') {
+    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
+  } 
+  else if (quality === 'Plausible') {
+    $(this).siblings('p').children('span.quality-judgment').text('Swill');
+  }
+};
+
 
 function findIdea(id) {
   console.log(id)
@@ -131,28 +157,16 @@ function findIdea(id) {
   console.log(uniqueId);
 }
 
-function downVote() {
-  var quality = ($(this).siblings('p').children('span.quality-judgment').text());
-  if (quality === 'Genius') {
-    $(this).siblings('p').children('span.quality-judgment').text('Plausible');
-  } 
-  else if (quality === 'Plausible') {
-    $(this).siblings('p').children('span.quality-judgment').text('Swill');
-  }
-};
 
-function toggleSubmitButton(event) {
-  event.preventDefault();
-  if ($titleInput.val() === '' || $bodyInput.val() === '') {
-    $submitButton.prop('disabled', true)
+function toggleSubmitButton() {
+  // event.preventDefault();
+  if ($titleInput.val() !== '' && $bodyInput.val() !== '') {
+    $submitButton.attr('disabled', false)
   } else {
-    $submitButton.prop('disabled', false)
+    return false;
   }
 };
 
 function searchLocalStorage() {
   console.log('searchLocalStorage function');
 }
-
-
-
