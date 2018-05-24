@@ -6,6 +6,7 @@ var $submitButton = $(".submit-button");
 var $searchInput = $(".search-input");
 var $ideaCard = $(".idea-card");
 var ideas = []
+var n=0
 
 $titleInput.on('keyup', toggleSubmitButton);
 $bodyInput.on('keyup', toggleSubmitButton);
@@ -17,10 +18,8 @@ $searchInput.on('keyup', searchLocalStorage)
 
 if (localStorage.getItem('ideas')) {
   retrieveFromLocalStorage();
-  console.log(ideas.length)
 };
 
-//need an each loop to go through and grab each instance. idea is an array
 function createIdeaCard(idea){
   $ideaCard.prepend(`
     <li id=${idea.id} class="new-idea">
@@ -42,14 +41,11 @@ function createIdeaCard(idea){
 };
 
 function addToLocalStorage() {
-  console.log('addToLocalStoragefunction');
-  // var cardToStore = {id: id, title: title, body: body, quality: quality};
   var stringifiedCard = JSON.stringify(ideas);
   localStorage.setItem('ideas', stringifiedCard);
 }
 
 function retrieveFromLocalStorage() {
-  // do we need to pass in the id?
   var retrievedCard = localStorage.getItem('ideas');
   var parsedCard = JSON.parse(retrievedCard);
   console.log(parsedCard);
@@ -74,7 +70,6 @@ function newIdeaCard(event) {
   quality = 'Swill';
   var makeCard = new IdeaCard({id: id, title: title, body: body, quality: 'Swill'});
   createIdeaCard(makeCard);
-  // add to local strorage here 
 }
 
 function searchIdeas(){
@@ -86,13 +81,33 @@ function clearInputs(){
   $bodyInput.val('');
 };
 
-function deleteCard(event) {
-  removeCard = (this).closest('li').id;
+function deleteCard(event) { 
+  removeCardId = $(this).parent().parent().attr('id')
+  var retrievedCard = localStorage.getItem('ideas');
+  var parsedCard = JSON.parse(retrievedCard);
+  idToRemove = removeCardId
   $(this).parent().parent().remove();
-  localStorage.removeItem(removeCard);
+  var newArray = parsedCard.filter(function (obj) {
+    return idToRemove != obj.id
+  });
+  stringifiedArray = JSON.stringify(newArray);
+  localStorage.setItem('ideas', stringifiedArray);
+  localStorage.removeItem(ideas);
 };
 
+
 function upVote() {
+  var retrievedCard = localStorage.getItem('ideas');
+  var parsedCard = JSON.parse(retrievedCard);
+  
+  var newArray = parsedCard.filter(function (obj) {
+    return idToRemove != obj.id
+  });
+  localStorage.removeItem(ideas);
+  stringifiedArray = JSON.stringify(newArray);
+  localStorage.setItem('ideas', stringifiedArray);
+
+
   var quality = ($(this).siblings('p').children('span.quality-judgment').text());
     console.log(quality);
   if (quality === 'Swill') {
